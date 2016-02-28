@@ -179,4 +179,6 @@ public class Generador {
         int randomDistrito = rand.nextInt((10 - 1) + 1) + 1;
         return provincias.get("Provincia"+randomProvincia) +", "+ cantones.get("Canton"+randomCanton) +", "+ distritos.get("Distrito"+randomDistrito);
     }
+    
+    
 }
