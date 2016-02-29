@@ -1,6 +1,7 @@
 package modelo;
 
 
+import java.text.DecimalFormat;
 import java.util.*;
 import modelo.Estado;
 import modelo.Resultado;
@@ -46,7 +47,8 @@ public class Boleta {
     }
 
     public void setCalificacion(float calificacion) {
-        this.calificacion = calificacion;
+        DecimalFormat df = new DecimalFormat("#.##");
+        this.calificacion = Float.parseFloat(df.format(calificacion));
         if(calificacion >= 70) 
             setResultado(resultado.Aprobado);
         if(calificacion >= 65 && calificacion < 70) 
@@ -85,7 +87,7 @@ public class Boleta {
         "Calificacion: " + calificacion + "\n" + 
         "Estado: " + estado + "\n" + 
         "Resultado: " + resultado + 
-        "\n --- Info Estudiante --- \n" + 
+        //"\n --- Info Estudiante --- \n" + 
         estudiante.toString();
         return info;
     }
@@ -99,5 +101,43 @@ public class Boleta {
     public boolean equals(int id){
         return numeroDeBoleta == id;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.numeroDeBoleta;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Boleta other = (Boleta) obj;
+        if (this.numeroDeBoleta != other.numeroDeBoleta) {
+            return false;
+        }
+        return true;
+    }
+    
+    //0 iguales /1 param mayor /-1 param menor
+    public int compareTo(Boleta z){
+        return Float.compare(z.getCalificacion(), getCalificacion());
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+
+    
     
 }

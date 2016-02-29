@@ -168,7 +168,8 @@ public class Generador {
     
     public float crearNota(){
         Random rand = new Random();
-        int randomNum = rand.nextInt((100 - 23) + 1) + 23;
+        float randomNum=rand.nextFloat() * (0.00f - 100.00f) + 100.00f;
+
         return randomNum; 
     }
     

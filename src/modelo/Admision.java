@@ -22,9 +22,14 @@ public class Admision {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
         GestorBoletas gb = new GestorBoletas();
-        gb.crearBoletas(10);
+        gb.crearBoletas(5);
         System.out.println(gb.toString());
+        gb.ordenarPorAlfabeto();
+        System.out.println("\n\n\n-----Change-----\n\n\n");
+        System.out.println(gb.toString());
+  
     }
     
 }

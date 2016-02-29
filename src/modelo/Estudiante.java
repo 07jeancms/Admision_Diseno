@@ -108,6 +108,19 @@ public class Estudiante {
                 "Telefono: " + telefono;
         return info;
     }
+    //0 iguales /1 param mayor /-1 param menor
+    public int compareTo(Estudiante z){
+        String nombreCompleto1=z.getNombre()+z.getApellido();
+        String nombreCompleto2=getNombre()+getApellido();
+        int comparacion=nombreCompleto1.compareTo(nombreCompleto2);
+        if(comparacion>0){
+            return 1;
+        }
+        if(comparacion<0){
+            return -1;
+        }
+        return comparacion;
+    }
     
 
 }
