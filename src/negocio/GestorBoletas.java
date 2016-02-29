@@ -164,6 +164,6 @@ public class GestorBoletas {
                 }
             }
         }
-    }//Fin Ordenar por nota
+    }//Fin Ordenar por alfabeto
 
 }
