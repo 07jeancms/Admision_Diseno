@@ -5,6 +5,7 @@ import java.util.*;
 import modelo.Estado;
 import modelo.Estudiante;
 import modelo.Generador;
+import modelo.Resultado;
 
 /**
  *
@@ -67,6 +68,20 @@ public class GestorBoletas {
 
     public void insertarBoleta(Boleta boleta) {
         boletas.add(boleta);
+        switch(boleta.getResultado()){
+            case Rechazado:
+                this.contadorRechazados++;
+                break;
+            case Aprobado:
+                this.contadorAprobados++;
+                break;
+            case Elegible:
+                this.contadorElegibles++;
+                break;
+            default:
+                break;
+             
+        }
     }
 
     public String toString() {
@@ -79,19 +94,59 @@ public class GestorBoletas {
         return info;
     }
 
-    public ArrayList<Boleta> filtrarPorResultado() {
+    public ArrayList<Boleta> filtrarPorResultado(Resultado resultadoAFiltrar) {
         // TODO implement here
-        return null;
+        ArrayList<Boleta> boletasFiltradas = new ArrayList<>();
+        for (Boleta boletaAFiltrar : this.getBoletas()) {
+            if(boletaAFiltrar.getResultado().equals(resultadoAFiltrar)){
+                boletasFiltradas.add(boletaAFiltrar);
+            }
+                
+            }
+        return boletasFiltradas;
     }
-
+    public HashMap obtenerPorcentajes(){
+        float cantidadDeAplicantes = this.boletas.size();
+        HashMap<Resultado,Float> porcentajes = new HashMap<>() ;
+        porcentajes.put(Resultado.Aprobado, (this.contadorAprobados/cantidadDeAplicantes)*100);
+        porcentajes.put(Resultado.Rechazado, (this.contadorRechazados/cantidadDeAplicantes)*100);
+        porcentajes.put(Resultado.Elegible, (this.contadorElegibles/cantidadDeAplicantes)*100);
+        
+        //porcentajes.<"admitidos",this.contadorAprobados/cantidadDeAplicantes>;
+        return porcentajes;
+    }
     public String construirReporte() {
         // TODO implement here
-        return "";
+        String reporte = "Reporte \n";
+        //Primero se muestran el total de aplicantes
+        int cantidadDeAplicantes = this.boletas.size();
+        reporte +="-Total de aplicantes "+cantidadDeAplicantes;
+        HashMap porcentajes = obtenerPorcentajes();
+        //Porcentaje de admitidos 
+        reporte +="\n-Porcentaje aprobados "+porcentajes.get(Resultado.Aprobado);
+        //Porcentaje de elegibles 
+        
+        reporte +="\n-Porcentaje elegibles "+porcentajes.get(Resultado.Elegible);
+         //Porcentaje de rechazados 
+        reporte +="\n-Porcentaje rechazados "+porcentajes.get(Resultado.Rechazado);
+        
+                
+        return reporte;
     }
-
+ 
     public String construirReporteConTresMejoresPromedios() {
         // TODO implement here
-        return "";
+        int posicion = 1;
+        String reporte = "Reporte de tres mejores promedios\n";
+        this.ordenarPorNota();
+        for (int mejorPromedioIndice = 0; mejorPromedioIndice < 3; mejorPromedioIndice++) {
+           //reporte += "\n +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-";
+            reporte += "\n Posicion "+(posicion++);
+            reporte += "\n \t Estudiante : "+ boletas.get(mejorPromedioIndice).getEstudiante().getNombre() + " "+ boletas.get(mejorPromedioIndice).getEstudiante().getApellido();
+            reporte += "\n \t Calificacion : "+ boletas.get(mejorPromedioIndice).getCalificacion();
+            
+        }
+        return reporte;
     }
 
     public String actualizarCalificacion(float calificacion, int numeroBoleta) {
