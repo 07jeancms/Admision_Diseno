@@ -48,7 +48,7 @@ public class Boleta {
 
     public void setCalificacion(float calificacion) {
         DecimalFormat df = new DecimalFormat("#.##");
-        this.calificacion = Float.parseFloat(df.format(calificacion));
+        this.calificacion = calificacion;
         if(calificacion >= 70) 
             setResultado(resultado.Aprobado);
         if(calificacion >= 65 && calificacion < 70) 

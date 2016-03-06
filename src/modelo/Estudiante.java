@@ -97,7 +97,7 @@ public class Estudiante {
     }
 
     public String toString() {
-        String info = "";
+        String info = "\n";
         info += "id: " + id + "\n" + 
                 "Nombre: " + nombre + "\n" +
                 "Apellido: " + apellido + "\n" +
@@ -105,7 +105,7 @@ public class Estudiante {
                 "Correo: " + correo + "\n" +
                 "Fecha de Nacimiento: " + fechaNacimiento + "\n" +
                 "Direccion: " + direccion + "\n" +
-                "Telefono: " + telefono;
+                "Telefono: " + telefono+"\n\n";
         return info;
     }
     //0 iguales /1 param mayor /-1 param menor

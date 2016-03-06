@@ -84,26 +84,30 @@ public class GestorBoletas {
         }
     }
 
+    @Override
     public String toString() {
-        String info = "";
-        for (int boletaActual = 0; boletaActual < boletas.size(); boletaActual++) {
-            info += "BOLETA #" + boletas.get(boletaActual).getNumeroDeBoleta() + "\n"
-                    + boletas.get(boletaActual).toString()
-                    + "\n-------------------------------\n";
-        }
+        String info = "\n";
+        info = boletas.stream().map((boleta) -> 
+                "\nBOLETA #" + boleta.getNumeroDeBoleta() +
+                        "\n" + boleta.toString() + 
+                        "\n-------------------------------\n").
+                reduce(info, String::concat);
         return info;
     }
-
-    public ArrayList<Boleta> filtrarPorResultado(Resultado resultadoAFiltrar) {
-        // TODO implement here
-        ArrayList<Boleta> boletasFiltradas = new ArrayList<>();
+    
+    //ANDRES FILTRAR POR RESULTADO 
+    public String filtrarPorResultado() {
+        String filtrados="\n";
         for (Boleta boletaAFiltrar : this.getBoletas()) {
-            if(boletaAFiltrar.getResultado().equals(resultadoAFiltrar)){
-                boletasFiltradas.add(boletaAFiltrar);
+            if(boletaAFiltrar.getResultado()==(Resultado.Elegible)
+                    || boletaAFiltrar.getResultado()==(Resultado.Rechazado) ){
+                filtrados+=boletaAFiltrar.toString();
             }
-                
-            }
-        return boletasFiltradas;
+        }
+        if(filtrados.equals("\n")){
+            filtrados="No hay reprobados ni rechazados";
+        }
+        return filtrados;
     }
     public HashMap obtenerPorcentajes(){
         float cantidadDeAplicantes = this.boletas.size();
@@ -115,6 +119,8 @@ public class GestorBoletas {
         //porcentajes.<"admitidos",this.contadorAprobados/cantidadDeAplicantes>;
         return porcentajes;
     }
+    
+    //ANDRES
     public String construirReporte() {
         // TODO implement here
         String reporte = "Reporte \n";
@@ -133,7 +139,8 @@ public class GestorBoletas {
                 
         return reporte;
     }
- 
+    
+    //ANDRES
     public String construirReporteConTresMejoresPromedios() {
         // TODO implement here
         int posicion = 1;
@@ -202,6 +209,27 @@ public class GestorBoletas {
         }
     }//Fin Ordenar por nota
     
+    public String rankingAdmitidos() {
+        ordenarPorNota();
+        ArrayList<Boleta> list;
+        String admitidosOrdenados="\n";
+        list = (ArrayList<Boleta>) this.boletas.clone();
+        Boleta temp;
+        
+        for (int j = 0; j < list.size(); j++) {
+            if (list.get(j).getResultado()==Resultado.Aprobado) {
+                admitidosOrdenados+=list.get(j).toString();
+            }else{
+                break;
+            }
+
+        }
+        if(admitidosOrdenados.equals("\n")){
+            admitidosOrdenados="No hay resultados!";
+        }
+        return admitidosOrdenados;
+    }
+
     //Ordena por nombre y lo secundario apellidos luego por apellidos
     //Orden descendente A-Z
     public void ordenarPorAlfabeto() {

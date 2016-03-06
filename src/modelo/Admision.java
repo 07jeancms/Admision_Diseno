@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.Random;
 import modelo.Resultado;
 import negocio.GestorBoletas;
+import vista.General;
 
 /**
  *
@@ -24,11 +25,10 @@ public class Admision {
         // TODO code application logic here
         
         GestorBoletas gb = new GestorBoletas();
-        gb.crearBoletas(5);
-        System.out.println(gb.toString());
-        gb.ordenarPorAlfabeto();
-        System.out.println("\n\n\n-----Change-----\n\n\n");
-        System.out.println(gb.toString());
+        //gb.crearBoletas(5);
+        General guiGeneral= new General();
+        guiGeneral.setLocationRelativeTo(null);
+        guiGeneral.setVisible(true);
   
     }
     
